@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensya</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3f0;
+      color: #333;
+    }
+
+    body.dark {
+    background: #1e1e1e;
+    color: #f5f5f5;
+    }
+
+    body.dark header {
+    background: #2a2a2a;
+    }
+
+    body.dark .card,
+    body.dark .container,
+    body.dark .article {
+    background: #2a2a2a;
+    color: #f5f5f5;
+    }
+
+    body.dark button {
+    background: #444;
+    color: #fff;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f2eae5;
+      box-sizing: border-box;
+    }
+
+    body.dark header {
+    background: #2a2a2a;
+    }   
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    body.dark nav a {
+    color: #f5f5f5;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: calc(100vh - 70px);
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #e6dcd5;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #d6c7be;
+    }
+
+    .result {
+      margin-top: 30px;
+      max-width: 400px;
+      font-size: 1.1rem;
+    }
+
+    .quote {
+      margin-top: 15px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Sensya</div><button onclick="toggleDarkMode()">🌙 Mode sombre</button>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="Page_Explorer.html">Explorer</a>
+      <a href="Page_Ressources.html">Ressources</a>
+      <a href="Page_Propos.html">À propos</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Comment tu te sens aujourd'hui ?</h1>
+
+    <div class="buttons">
+      <button onclick="showMessage('submerge')">😵‍💫 Submergé(e)</button>
+      <button onclick="showMessage('pensees')">🧠 Trop de pensées</button>
+      <button onclick="showMessage('fatigue')">😞 Fatigué(e)</button>
+      <button onclick="showMessage('sensible')">💔 Sensible</button>
+      <button onclick="showMessage('douceur')">🌿 Besoin de douceur</button>
+    </div>
+
+    <div class="result" id="result"></div>
+  </main>
+
+  <script>
+    const messages = {
+      submerge: {
+        text: "Tu as le droit de ralentir. Tout ne doit pas être réglé aujourd'hui.",
+        quote: "Respire. Même lentement, tu avances."
+      },
+      pensees: {
+        text: "Ton cerveau est actif, mais tu peux lui donner une pause.",
+        quote: "Toutes les pensées ne méritent pas ton attention."
+      },
+      fatigue: {
+        text: "La fatigue est un signal, pas une faiblesse.",
+        quote: "Se reposer, c'est aussi avancer."
+      },
+      sensible: {
+        text: "Ressentir fort n'est pas un défaut, c'est une richesse.",
+        quote: "Ta sensibilité est une force, même si elle fatigue."
+      },
+      douceur: {
+        text: "Tu mérites de la douceur, surtout de toi-même.",
+        quote: "Parle-toi comme tu parlerais à quelqu'un que tu aimes."
+      }
+    };
+
+    function showMessage(type) {
+      const resultDiv = document.getElementById('result');
+      const data = messages[type];
+
+      resultDiv.innerHTML = `
+        <p>${data.text}</p>
+        <p class="quote">${data.quote}</p>
+      `;
+    }
+  </script>
+
+    <script>
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+
+  
+        if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        } else {
+        localStorage.setItem("theme", "light");
+        }
+    }
+
+    window.onload = function () {
+        const theme = localStorage.getItem("theme");
+
+        if (theme === "dark") {
+        document.body.classList.add("dark");
+        }
+    };
+    </script>
+
+</body>
+</html>

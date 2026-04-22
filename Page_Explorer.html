@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensya - Explorer & Outils</title>
+  <style>
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f3f0;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    }
+
+    body.dark {
+    background: #1e1e1e;
+    color: #f5f5f5;
+    }
+
+    body.dark header {
+    background: #2a2a2a;
+    }
+
+    body.dark .card,
+    body.dark .container,
+    body.dark .article {
+    background: #2a2a2a;
+    color: #f5f5f5;
+    }
+
+    body.dark button {
+    background: #444;
+    color: #fff;
+    }
+
+    header {
+    width: 100%;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f2eae5;
+    box-sizing: border-box;
+    }
+
+    body.dark header {
+    background: #2a2a2a;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    body.dark nav a {
+    color: #f5f5f5;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin: 60px 0;
+    }
+
+    .categories, .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 20px;
+      background: #e6dcd5;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+      text-align: left;
+    }
+
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .result-box {
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    canvas {
+      margin-top: 20px;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+    <div class="logo">Sensya</div><button onclick="toggleDarkMode()">🌙 Mode sombre</button>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="Page_Explorer.html">Explorer</a>
+      <a href="Page_Ressources.html">Ressources</a>
+      <a href="Page_Propos.html">À propos</a>
+    </nav>
+    </header>
+
+
+  <div class="section">
+    <h1>Explorer par émotions</h1>
+
+    <div class="categories">
+      <button onclick="loadCategory('mal')">🌧 Quand ça ne va pas</button>
+      <button onclick="loadCategory('tdah')">🧠 TDAH</button>
+      <button onclick="loadCategory('hyper')">💛 Hypersensibilité</button>
+      <button onclick="loadCategory('calme')">🌿 Calme</button>
+      <button onclick="loadCategory('citation')">💬 Citations</button>
+    </div>
+
+    <div class="grid" id="grid"></div>
+  </div>
+
+
+  <div class="section">
+    <h2>Ton cerveau part dans tous les sens ?</h2>
+
+    <div class="buttons">
+      <button onclick="tdah('start')">Je n'arrive pas à commencer</button>
+      <button onclick="tdah('procrastine')">Je procrastine</button>
+      <button onclick="tdah('distrait')">Je suis distrait</button>
+      <button onclick="tdah('deborde')">Je suis débordé</button>
+    </div>
+
+    <div class="result-box" id="tdah-result"></div>
+  </div>
+
+ 
+  <div class="section">
+    <h2>💛 Boîte à douceur</h2>
+
+    <button onclick="generateSoft()">J'ai besoin de bienveillance</button>
+
+    <div class="result-box" id="soft-result"></div>
+
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <div>
+      <button onclick="downloadImage()">Télécharger l'image</button>
+      <button onclick="shareImage()">Partager (copie texte)</button>
+    </div>
+  </div>
+
+  <script>
+    const data = {
+      mal: ["Même les jours sombres passent.","Tu fais de ton mieux.","Rien ne dure."],
+      tdah: ["Commence petit.","Ton cerveau est rapide.","Tu n'es pas paresseux."],
+      hyper: ["Ta sensibilité est une force.","Tu ressens profondément.","C'est une richesse."],
+      calme: ["Respire.","Ralentis.","Le calme revient."],
+      citation: ["Un jour à la fois.","Tu es plus fort que tu crois.","Continue."]
+    };
+
+    function loadCategory(type) {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      data[type].forEach(text => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <div>${text}</div>
+          <div class="actions">
+            <button onclick="like(this)">❤️</button>
+            <button onclick="share('${text}')">📤</button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function like(btn) { btn.textContent = '💖'; }
+
+    function share(text) {
+      navigator.clipboard.writeText(text);
+      alert('Copié !');
+    }
+
+    function tdah(type) {
+      const result = document.getElementById('tdah-result');
+
+      const tips = {
+        start: "Commence juste 2 minutes.",
+        procrastine: "Fais la tâche la plus simple.",
+        distrait: "Coupe tout 5 min.",
+        deborde: "Note tout et fais une chose à la fois."
+      };
+
+      result.innerHTML = `<p>${tips[type]}</p><p>Tu fais de ton mieux 💛</p>`;
+    }
+
+    function generateSoft() {
+      const messages = [
+        "Tu mérites de la douceur.",
+        "Tu fais déjà beaucoup.",
+        "Respire, ça va aller.",
+        "Sois gentil avec toi-même."
+      ];
+
+      const msg = messages[Math.floor(Math.random()*messages.length)];
+      document.getElementById('soft-result').innerText = msg;
+
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#f2eae5';
+      ctx.fillRect(0,0,300,300);
+
+      ctx.fillStyle = '#333';
+      ctx.font = '16px Arial';
+      ctx.fillText(msg, 20, 150);
+    }
+
+    function downloadImage() {
+      const canvas = document.getElementById('canvas');
+      const link = document.createElement('a');
+      link.download = 'douceur.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+
+    function shareImage() {
+      const text = document.getElementById('soft-result').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Texte copié pour partager !');
+    }
+  </script>
+
+    <script>
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+
+        
+        if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        } else {
+        localStorage.setItem("theme", "light");
+        }
+    }
+
+    
+    window.onload = function () {
+        const theme = localStorage.getItem("theme");
+
+        if (theme === "dark") {
+        document.body.classList.add("dark");
+        }
+    };
+    </script>
+
+</body>
+</html>

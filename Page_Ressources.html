@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ressources - Sensya</title>
+  <style>
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f3f0;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    }
+
+    body.dark {
+    background: #1e1e1e;
+    color: #f5f5f5;
+    }
+
+    body.dark header {
+    background: #2a2a2a;
+    }
+
+    body.dark .card,
+    body.dark .container,
+    body.dark .article {
+    background: #2a2a2a;
+    color: #f5f5f5;
+    }
+
+    body.dark button {
+    background: #444;
+    color: #fff;
+    }
+
+    header {
+    width: 100%;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f2eae5;
+    box-sizing: border-box;
+    }
+
+    body.dark header {
+    background: #2a2a2a;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    body.dark nav a {
+    color: #f5f5f5;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 20px;
+      background: #e6dcd5;
+      cursor: pointer;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .article {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    }
+
+    .disclaimer {
+      margin-top: 30px;
+      padding: 15px;
+      background: #e6dcd5;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+    <div class="logo">Sensya</div><button onclick="toggleDarkMode()">🌙 Mode sombre</button>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="Page_Explorer.html">Explorer</a>
+      <a href="Page_Ressources.html">Ressources</a>
+      <a href="Page_Propos.html">À propos</a>
+    </nav>
+    </header>
+
+  <div class="container">
+    <h1>📚 Ressources</h1>
+
+    <div class="article">
+      <h2>💛 Comprendre l'hypersensibilité</h2>
+      <p>
+        L’hypersensibilité signifie ressentir les émotions de manière plus intense que la moyenne.
+        Cela peut rendre certains moments plus difficiles, mais aussi permettre une grande empathie
+        et une perception fine du monde.
+      </p>
+      <p>
+        👉 Conseil : accorde-toi des moments de calme pour recharger ton énergie.
+      </p>
+    </div>
+
+    <div class="article">
+      <h2>🧠 Vivre avec un cerveau TDAH</h2>
+      <p>
+        Le TDAH peut rendre la concentration, l’organisation et la gestion du temps plus complexes.
+        Mais il s’accompagne souvent de créativité, d’énergie et d’idées rapides.
+      </p>
+      <p>
+        👉 Conseil : découpe tes tâches en petites étapes simples.
+      </p>
+    </div>
+
+    <div class="article">
+      <h2>🌿 Conseils simples au quotidien</h2>
+      <ul>
+        <li>Respirer profondément quelques minutes</li>
+        <li>Faire une pause sans culpabiliser</li>
+        <li>Noter ses pensées pour alléger l’esprit</li>
+        <li>Faire une chose à la fois</li>
+      </ul>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ Ce site propose du contenu bienveillant et informatif uniquement.
+      Il ne remplace pas un avis médical ou professionnel.
+      Si tu en ressens le besoin, n’hésite pas à consulter un professionnel de santé.
+    </div>
+
+  </div>
+
+    <script>
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+
+        
+        if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        } else {
+        localStorage.setItem("theme", "light");
+        }
+    }
+
+    
+    window.onload = function () {
+        const theme = localStorage.getItem("theme");
+
+        if (theme === "dark") {
+        document.body.classList.add("dark");
+        }
+    };
+    </script>
+
+</body>
+</html>
